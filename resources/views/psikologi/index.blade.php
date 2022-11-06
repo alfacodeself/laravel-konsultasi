@@ -61,6 +61,7 @@
                       <li class="mb-2">Cari tempat yang nyaman dan kondusif supaya kamu lebih fokus.</li>
                       <li class="mb-2">Jika kamu keluar di tengah tes, maka seluruh proses tes dan jawaban akan hilang.</li>
                       <li class="mb-2">Hasil tes bisa kamu dapatkan setelah mengisi semua pertanyaan dengan lengkap.</li>
+                      <li class="mb-2">Untuk melihat hasil tes, kamu diharuskan login dulu ya.</li>
                     </ol>
                     <h5 class="text-center">Selamat mengisi, ya! : )</h5>
                   </div>

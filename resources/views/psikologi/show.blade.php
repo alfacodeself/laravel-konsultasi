@@ -3,7 +3,7 @@
 <html lang="id">
     <head>
         <meta charset="utf-8" />
-        <title>Log In Admin | Laravel Konsultasi</title>
+        <title>Laravel Konsultasi | Question Psycholog</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -20,7 +20,7 @@
 
     </head>
 
-    <body class="loading authentication-bg authentication-bg-pattern">
+    <body class="loading" style="background:linear-gradient(rgba(30, 112, 108, 0.9), rgba(3, 22, 54, 0.9)) fixed center center;">
 
         <div class="account-pages my-5">
             <div class="container">
@@ -36,9 +36,6 @@
 
                 <div class="row">
                     <div class="col-lg-12">
-                        {{-- <div class="progress mb-3">
-                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div> --}}
                         <form action="{{ route('tes', $psycholog->uuid) }}" method="POST">
                             @csrf
                             <div class="conversation-list-card card">
@@ -74,7 +71,7 @@
                                 <div class="p-3 conversation-input border-top">
                                     <div class="row">
                                         <div class="col-auto">
-                                            <button type="submit" class="btn btn-primary chat-send width-md waves-effect waves-light"><span class="d-none d-sm-inline-block me-2">Kirim Jawaban</span> <i class="mdi mdi-send"></i></button>
+                                            <button type="submit" class="btn btn-info chat-send width-md waves-effect waves-light"><span class="d-none d-sm-inline-block me-2">Kirim Jawaban</span> <i class="mdi mdi-send"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -98,10 +95,5 @@
 
         <!-- App js -->
         <script src="{{ asset('assets/js/app.min.js') }}"></script>
-        {{-- <script>
-            function addBar($value){
-
-            }
-        </script> --}}
     </body>
 </html>
