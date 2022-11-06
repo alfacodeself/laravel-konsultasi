@@ -1,0 +1,55 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Answer;
+use App\Models\Psycholog;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Models\PsychologUser;
+use Illuminate\Support\Facades\Auth;
+
+class WelcomeController extends Controller
+{
+    public function index()
+    {
+        $psychologs = Psycholog::where('status', 'aktif')->get();
+        // dd($satuan);
+        return view('welcome', compact('psychologs'));
+    }
+    public function psycholog(Psycholog $psycholog)
+    {
+        return view('psikologi.index', compact('psycholog'));
+    }
+    public function show(Psycholog $psycholog)
+    {
+        return view('psikologi.show', compact('psycholog'));
+    }
+    public function store(Request $request, Psycholog $psycholog)
+    {
+        if (!$request->has('jawaban')) {
+            return back()->withErrors(['jawaban' => 'Jawaban tidak boleh kosong']);
+        }
+        if (count($request->jawaban) < $psycholog->questions->count()) {
+            return back()->withErrors(['jawaban' => 'Harap isi semua pertanyaan']);
+        }
+        try {
+            $totalPoint = Answer::whereIn('uuid', $request->jawaban)->sum('poin');
+            if (!auth('user')->check()) {
+                return redirect()->route('login')->with(['point' => $totalPoint, 'psycholog' => $psycholog->uuid, 'warning' => 'Silakan login untuk melihat hasil tes psikologi']);
+            }
+            else {
+                PsychologUser::create([
+                    'uuid' => Str::uuid(),
+                    'psycholog_id' => $psycholog->id,
+                    'user_id' => Auth::guard('user')->id(),
+                    'nilai' => $totalPoint,
+                    'status' => 'belum lunas'
+                ]);
+                return redirect()->route('user.dashboard')->with('success', 'Berhasil menyelesaikan tes psikologi ' . $psycholog->judul);
+            }
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
+    }
+}
