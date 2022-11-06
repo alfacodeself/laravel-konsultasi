@@ -6,8 +6,7 @@
         <div class="user-box text-center">
 
             <img src="{{ asset('assets/images/users/user-1.jpg') }}" alt="user-img" title="Mat Helme" class="rounded-circle img-thumbnail avatar-md">
-            <p href="#" class="user-name h5 mt-2 mb-1 d-block">Alfa Code</p>
-            <p class="text-muted left-user-info">Administrator</p>
+            <p href="#" class="user-name h5 mt-2 mb-1 d-block">{{ auth('user')->check() ? auth('user')->user()->nama : auth('admin')->user()->nama }}</p>
         </div>
 
         <!--- Sidemenu -->
@@ -28,38 +27,38 @@
                 <li>
                     <a href="#">
                         <i class="mdi mdi-forum-outline"></i>
-                        <span> Konsultasi </span>
+                        <span> Konseling </span>
                     </a>
                 </li>
                 <li class="menu-title mt-2">Data</li>
                 <li>
                     <a href="{{ route('admin.psycholog.index') }}">
-                        <i class="mdi mdi-forum-outline"></i>
+                        <i class="mdi mdi-book-edit-outline"></i>
                         <span> Tes Psikologi </span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <i class="mdi mdi-forum-outline"></i>
+                        <i class="mdi mdi-account-box-multiple-outline"></i>
                         <span> Data Pasien </span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <i class="mdi mdi-forum-outline"></i>
+                        <i class="mdi mdi-file-document-multiple-outline"></i>
                         <span> Data Transaksi </span>
                     </a>
                 </li>
                 <li class="menu-title mt-2">Settings</li>
                 <li>
                     <a href="#">
-                        <i class="mdi mdi-forum-outline"></i>
+                        <i class="mdi mdi-account-lock-outline"></i>
                         <span> Pengaturan Akun </span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <i class="mdi mdi-forum-outline"></i>
+                        <i class="mdi mdi-account-edit-outline"></i>
                         <span> Pengaturan Profil </span>
                     </a>
                 </li>
@@ -80,27 +79,27 @@
                 </li>
                 <li>
                     <a href="{{ route('user.psycholog.index') }}">
-                        <i class="mdi mdi-forum-outline"></i>
+                        <i class="mdi mdi-book-edit-outline"></i>
                         <span> Hasil Tes Psikologi </span>
                     </a>
                 </li>
                 <li class="menu-title">History</li>
                 <li>
                     <a href="#">
-                        <i class="mdi mdi-forum-outline"></i>
+                        <i class="mdi mdi-file-document-multiple-outline"></i>
                         <span> Riwayat Transaksi </span>
                     </a>
                 </li>
                 <li class="menu-title mt-2">Settings</li>
                 <li>
                     <a href="#">
-                        <i class="mdi mdi-forum-outline"></i>
+                        <i class="mdi mdi-account-lock-outline"></i>
                         <span> Pengaturan Akun </span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
-                        <i class="mdi mdi-forum-outline"></i>
+                        <i class="mdi mdi-account-edit-outline"></i>
                         <span> Pengaturan Profil </span>
                     </a>
                 </li>
