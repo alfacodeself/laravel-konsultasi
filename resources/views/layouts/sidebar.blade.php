@@ -24,8 +24,6 @@
             <p href="#" class="user-name text-capitalize h5 mt-2 mb-1 d-block">
                 {{ auth('user')->check() ? auth('user')->user()->nama : auth('admin')->user()->nama }}</p>
         </div>
-
-        <!--- Sidemenu -->
         <div id="sidebar-menu">
 
             <ul id="side-menu">
@@ -54,7 +52,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{ route('admin.pasien.index') }}">
                             <i class="mdi mdi-account-box-multiple-outline"></i>
                             <span> Data Pasien </span>
                         </a>

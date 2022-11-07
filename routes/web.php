@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Auth\{LoginAdminController, LogoutAdminController};
-use App\Http\Controllers\Admin\{DashboardController, ProfileAdminController, PsychologAdminController, QuestionAdminController};
+use App\Http\Controllers\Admin\{DashboardController, PasienAdminController, ProfileAdminController, PsychologAdminController, QuestionAdminController};
 use App\Http\Controllers\User\Auth\{LoginController, LogoutController, RegisterController};
 use App\Http\Controllers\User\DashboardUserController;
 use App\Http\Controllers\User\ProfileUserController;
@@ -33,9 +33,16 @@ Route::prefix('admin')->middleware(SessionAdminLoginMiddleware::class)->as('admi
         });
 
     });
+    Route::prefix('pasien')->as('pasien.')->group(function(){
+        Route::get('/', [PasienAdminController::class, 'index'])->name('index');
+        Route::post('store', [PasienAdminController::class, 'store'])->name('store');
+        Route::put('{user}/update-password', [PasienAdminController::class, 'update'])->name('update');
+        Route::delete('{user}/delete', [PasienAdminController::class, 'destroy'])->name('destroy');
+    });
     Route::prefix('konsultasi')->as('konsultasi.')->group(function(){
         Route::view('/', 'admin.konsultasi.index')->name('index');
     });
+
     Route::prefix('pengaturan')->as('pengaturan.')->group(function(){
         Route::prefix('profil')->as('profil.')->group(function(){
             Route::get('/', [ProfileAdminController::class, 'index'])->name('index');

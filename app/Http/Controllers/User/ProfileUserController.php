@@ -19,7 +19,7 @@ class ProfileUserController extends Controller
         $request->validate([
             'foto' => $rule . '|image|mimes:png,jpg,jpeg,gif|max:5000',
             'nama' => 'required',
-            'email' => 'required'
+            'email' => 'required|unique:users,email,' . auth('user')->id()
         ]);
         // dd($request->all());
         try {
