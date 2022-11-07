@@ -1,14 +1,24 @@
 <div class="navbar-custom">
     <ul class="list-unstyled topnav-menu float-end mb-0">
         <li class="dropdown notification-list topbar-dropdown">
-            <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+            <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown"
+                href="#" role="button" aria-haspopup="false" aria-expanded="false">
                 @if (auth('user')->check())
-                    <img src="{{ asset(auth('user')->user()->foto) }}" alt="user-image" class="rounded-circle">
+                    @if (auth('user')->user()->foto == null)
+                        <img src="{{ asset('assets/images/default-avatar.png') }}" alt="user-image" class="rounded-circle">
+                    @else
+                        <img src="{{ url(auth('user')->user()->foto) }}" alt="user-image" class="rounded-circle">
+                    @endif
                 @elseif (auth('admin')->check())
-                    <img src="{{ asset(auth('admin')->user()->foto) }}" alt="user-image" class="rounded-circle">
+                    @if (auth('admin')->user()->foto == null)
+                        <img src="{{ asset('assets/images/default-avatar.png') }}" alt="user-image" class="rounded-circle">
+                    @else
+                        <img src="{{ url(auth('admin')->user()->foto) }}" alt="user-image" class="rounded-circle">
+                    @endif
                 @endif
-                <span class="pro-user-name ms-1">
-                    {{ auth('user')->check() ? auth('user')->user()->nama : auth('admin')->user()->nama }} <i class="mdi mdi-chevron-down"></i> 
+                <span class="pro-user-name text-capitalize ms-1">
+                    {{ auth('user')->check() ? auth('user')->user()->nama : auth('admin')->user()->nama }} <i
+                        class="mdi mdi-chevron-down"></i>
                 </span>
             </a>
             <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
@@ -26,18 +36,18 @@
                 <div class="dropdown-divider"></div>
 
                 <!-- item-->
-                
+
                 @if (Auth::guard('admin')->check())
                     <form action="{{ route('admin.logout') }}" method="post">
-                @elseif (Auth::guard('user')->check())
-                    <form action="{{ route('user.logout') }}" method="post">
+                    @elseif (Auth::guard('user')->check())
+                        <form action="{{ route('user.logout') }}" method="post">
                 @endif
-                    @csrf
-                    @method('POST')
-                    <button type="submit" class="dropdown-item notify-item">
-                        <i class="fe-log-out"></i>
-                        <span>Logout</span>
-                    </button>
+                @csrf
+                @method('POST')
+                <button type="submit" class="dropdown-item notify-item">
+                    <i class="fe-log-out"></i>
+                    <span>Logout</span>
+                </button>
                 </form>
 
             </div>
@@ -80,6 +90,6 @@
 
     </ul>
 
-    <div class="clearfix"></div> 
+    <div class="clearfix"></div>
 
 </div>

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class DashboardUserController extends Controller
 {

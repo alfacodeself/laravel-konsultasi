@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\Auth\{LoginAdminController, LogoutAdminController
 use App\Http\Controllers\Admin\{DashboardController, ProfileAdminController, PsychologAdminController, QuestionAdminController};
 use App\Http\Controllers\User\Auth\{LoginController, LogoutController, RegisterController};
 use App\Http\Controllers\User\DashboardUserController;
+use App\Http\Controllers\User\ProfileUserController;
 use App\Http\Controllers\User\PsychologUserController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Middleware\SessionAdminLoginMiddleware;
@@ -65,5 +66,12 @@ Route::prefix('user')->as('user.')->middleware(SessionUserLoginMiddleware::class
     Route::prefix('psycholog')->as('psycholog.')->group(function(){
         Route::get('/', [PsychologUserController::class, 'index'])->name('index');
         Route::get('{psycholog}/detail', [PsychologUserController::class, 'show'])->name('show');
+    });
+    Route::prefix('pengaturan')->as('pengaturan.')->group(function(){
+        Route::prefix('profil')->as('profil.')->group(function(){
+            Route::get('/', [ProfileUserController::class, 'index'])->name('index');
+            Route::post('store', [ProfileUserController::class, 'store'])->name('store');
+            Route::post('account', [ProfileUserController::class, 'setAccount'])->name('account');
+        });
     });
 });

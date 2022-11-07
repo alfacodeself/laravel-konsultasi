@@ -8,13 +8,13 @@
     <div class="row">
         @forelse ($psychologs as $psycholog)
         <div class="col-xl-4">
-            <div class="card">
+            <div class="card" style="height: 27rem">
                 <div class="text-center card-body">
                     <div>
-                        <img src="{{ url($psycholog->gambar) }}" class="mb-1" style="width: 100%; height: 140px;" alt="profile-image">
+                        <img src="{{ url($psycholog->gambar) }}" class="mb-1" style="width: 100%; height: 200px;" alt="profile-image">
                         <h4 class="card-title">{{ $psycholog->judul }}</h4>
                         <p class="text-muted font-13">
-                            {{ $psycholog->deskripsi }}
+                            {{ Str::limit($psycholog->deskripsi, 50, '...') }}
                         </p>
                         <div class="text-start text-capitalize">
                             <p class="text-muted font-13 text-dark">
