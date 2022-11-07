@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Auth\{LoginAdminController, LogoutAdminController};
-use App\Http\Controllers\Admin\{DashboardController, PsychologAdminController, QuestionAdminController};
+use App\Http\Controllers\Admin\{DashboardController, ProfileAdminController, PsychologAdminController, QuestionAdminController};
 use App\Http\Controllers\User\Auth\{LoginController, LogoutController, RegisterController};
 use App\Http\Controllers\User\DashboardUserController;
 use App\Http\Controllers\User\PsychologUserController;
@@ -35,6 +35,13 @@ Route::prefix('admin')->middleware(SessionAdminLoginMiddleware::class)->as('admi
     Route::prefix('konsultasi')->as('konsultasi.')->group(function(){
         Route::view('/', 'admin.konsultasi.index')->name('index');
     });
+    Route::prefix('pengaturan')->as('pengaturan.')->group(function(){
+        Route::prefix('profil')->as('profil.')->group(function(){
+            Route::get('/', [ProfileAdminController::class, 'index'])->name('index');
+            Route::post('store', [ProfileAdminController::class, 'store'])->name('store');
+            Route::post('account', [ProfileAdminController::class, 'setAccount'])->name('account');
+        });
+    });
     Route::post('logout', LogoutAdminController::class)->name('logout');
 });
 
@@ -44,6 +51,8 @@ Route::get('psycholog/{psycholog}', [WelcomeController::class, 'psycholog'])->na
 Route::get('psycholog/{psycholog}/question', [WelcomeController::class, 'show'])->name('psikologi.show');
 Route::post('{psycholog}/store', [WelcomeController::class, 'store'])->name('tes');
 
+
+// ========> Route User Login <===========
 Route::get('login', [LoginController::class, 'login'])->name('login');
 Route::post('login', [LoginController::class, 'authenticate']);
 Route::get('register', [RegisterController::class, 'register'])->name('register');

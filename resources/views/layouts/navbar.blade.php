@@ -2,7 +2,11 @@
     <ul class="list-unstyled topnav-menu float-end mb-0">
         <li class="dropdown notification-list topbar-dropdown">
             <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                <img src="{{ asset('assets/images/users/user-1.jpg') }}" alt="user-image" class="rounded-circle">
+                @if (auth('user')->check())
+                    <img src="{{ asset(auth('user')->user()->foto) }}" alt="user-image" class="rounded-circle">
+                @elseif (auth('admin')->check())
+                    <img src="{{ asset(auth('admin')->user()->foto) }}" alt="user-image" class="rounded-circle">
+                @endif
                 <span class="pro-user-name ms-1">
                     {{ auth('user')->check() ? auth('user')->user()->nama : auth('admin')->user()->nama }} <i class="mdi mdi-chevron-down"></i> 
                 </span>
@@ -16,7 +20,7 @@
                 <!-- item-->
                 <a href="#" class="dropdown-item notify-item">
                     <i class="fe-user"></i>
-                    <span>My Account</span>
+                    <span>Profil</span>
                 </a>
 
                 <div class="dropdown-divider"></div>
