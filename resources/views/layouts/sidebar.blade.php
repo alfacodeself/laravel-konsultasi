@@ -52,6 +52,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ route('admin.pricing.index') }}">
+                            <i class="mdi mdi-cash-multiple"></i>
+                            <span> Paket Konseling </span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('admin.pasien.index') }}">
                             <i class="mdi mdi-account-box-multiple-outline"></i>
                             <span> Data Pasien </span>

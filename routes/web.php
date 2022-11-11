@@ -1,14 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\Auth\{LoginAdminController, LogoutAdminController};
-use App\Http\Controllers\Admin\{DashboardController, PasienAdminController, ProfileAdminController, PsychologAdminController, QuestionAdminController};
+use App\Http\Controllers\Admin\{DashboardController, PasienAdminController, PricingController, ProfileAdminController, PsychologAdminController, QuestionAdminController};
 use App\Http\Controllers\User\Auth\{LoginController, LogoutController, RegisterController};
-use App\Http\Controllers\User\DashboardUserController;
-use App\Http\Controllers\User\ProfileUserController;
-use App\Http\Controllers\User\PsychologUserController;
+use App\Http\Controllers\User\{DashboardUserController, ProfileUserController, PsychologUserController};
 use App\Http\Controllers\WelcomeController;
-use App\Http\Middleware\SessionAdminLoginMiddleware;
-use App\Http\Middleware\SessionUserLoginMiddleware;
+use App\Http\Middleware\{SessionAdminLoginMiddleware, SessionUserLoginMiddleware};
 use Illuminate\Support\Facades\Route;
 
 // ========> Admin Route <=========
@@ -42,7 +39,12 @@ Route::prefix('admin')->middleware(SessionAdminLoginMiddleware::class)->as('admi
     Route::prefix('konsultasi')->as('konsultasi.')->group(function(){
         Route::view('/', 'admin.konsultasi.index')->name('index');
     });
-
+    Route::prefix('pricing')->as('pricing.')->group(function(){
+        Route::get('/', [PricingController::class, 'index'])->name('index');
+        Route::post('store', [PricingController::class, 'store'])->name('store');
+        Route::put('{pricing}/update', [PricingController::class, 'update'])->name('update');
+        Route::put('{pricing}/change-status', [PricingController::class, 'destroy'])->name('destroy');
+    });
     Route::prefix('pengaturan')->as('pengaturan.')->group(function(){
         Route::prefix('profil')->as('profil.')->group(function(){
             Route::get('/', [ProfileAdminController::class, 'index'])->name('index');

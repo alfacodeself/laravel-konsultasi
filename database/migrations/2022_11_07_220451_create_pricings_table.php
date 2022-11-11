@@ -15,10 +15,12 @@ return new class extends Migration
     {
         Schema::create('pricings', function (Blueprint $table) {
             $table->id();
+            $table->uuid()->unique();
             $table->string('nama_paket');
             $table->integer('sesi');
             $table->double('harga_paket');
             $table->text('fitur_paket');
+            $table->enum('status', ['aktif', 'nonaktif'])->default('aktif');
             $table->timestamps();
         });
     }

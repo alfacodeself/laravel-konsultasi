@@ -8,6 +8,6 @@
     </div>
 @elseif (session('error'))
     <div class="alert alert-danger" role="alert">
-        <strong>Error!</strong> {{ session('danger') }}
+        <strong>Error!</strong> {{ session('error') }}
     </div>
 @endif

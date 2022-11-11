@@ -14,7 +14,7 @@
                                 <div class="mt-3 mt-md-0">
                                     <button type="button" class="btn btn-success waves-effect waves-light"
                                         data-bs-toggle="modal" data-bs-target="#add-modal"><i
-                                            class="mdi mdi-plus-circle me-1"></i> Buat Tes Psikolog</button>
+                                            class="mdi mdi-plus-circle me-1"></i> Tambahkan Data Pasien</button>
                                 </div>
                             </div><!-- end col-->
                             <div class="col-md-8">

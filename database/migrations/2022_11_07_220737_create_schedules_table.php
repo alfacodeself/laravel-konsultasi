@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->uuid()->unique();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('pricing_id')->constrained('pricings')->cascadeOnDelete();
             $table->dateTime('jadwal_konseling');
             $table->enum('status', ['lunas', 'belum lunas'])->default('belum lunas');
             $table->boolean('diterima')->default(false);
