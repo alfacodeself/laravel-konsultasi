@@ -99,7 +99,7 @@
                     </li>
                     <li class="menu-title">History</li>
                     <li>
-                        <a href="#">
+                        <a href="{{ route('user.transaksi.index') }}">
                             <i class="mdi mdi-file-document-multiple-outline"></i>
                             <span> Transaksi </span>
                         </a>

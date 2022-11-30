@@ -3,10 +3,11 @@
 use App\Http\Controllers\Admin\Auth\{LoginAdminController, LogoutAdminController};
 use App\Http\Controllers\Admin\{DashboardController, PasienAdminController, PricingController, ProfileAdminController, PsychologAdminController, QuestionAdminController};
 use App\Http\Controllers\User\Auth\{LoginController, LogoutController, RegisterController};
-use App\Http\Controllers\User\{DashboardUserController, ProfileUserController, PsychologUserController};
+use App\Http\Controllers\User\{DashboardUserController, ProfileUserController, PsychologUserController, TransactionUserController};
 use App\Http\Controllers\WelcomeController;
 use App\Http\Middleware\{SessionAdminLoginMiddleware, SessionUserLoginMiddleware};
 use Illuminate\Support\Facades\Route;
+
 
 // ========> Admin Route <=========
 Route::get('admin/login', [LoginAdminController::class, 'login'])->name('admin.login');
@@ -75,6 +76,12 @@ Route::prefix('user')->as('user.')->middleware(SessionUserLoginMiddleware::class
     Route::prefix('psycholog')->as('psycholog.')->group(function(){
         Route::get('/', [PsychologUserController::class, 'index'])->name('index');
         Route::get('{psycholog}/detail', [PsychologUserController::class, 'show'])->name('show');
+        Route::get('{psycholog}/{psycholog_user}/checkout', [PsychologUserController::class, 'checkout'])->name('checkout');
+    });
+    Route::prefix('transaksi')->as('transaksi.')->group(function(){
+        Route::get('/', [TransactionUserController::class, 'index'])->name('index');
+        Route::post('{psycholog_user}/store', [TransactionUserController::class, 'store'])->name('store');
+        Route::get('{reference}/show', [TransactionUserController::class, 'show'])->name('show');
     });
     Route::prefix('pengaturan')->as('pengaturan.')->group(function(){
         Route::prefix('profil')->as('profil.')->group(function(){

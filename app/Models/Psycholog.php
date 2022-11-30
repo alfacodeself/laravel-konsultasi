@@ -22,4 +22,8 @@ class Psycholog extends Model
     {
         return $this->hasMany(PsychologUser::class);
     }
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'barang_id', 'id');
+    }
 }

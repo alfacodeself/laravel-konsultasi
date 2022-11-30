@@ -32,7 +32,7 @@
                                     <td>{{ $pu->created_at->format('Y-m-d H:i:s') }}</td>
                                     <td>
                                         @if ($pu->status == 'belum lunas')
-                                        <a href="" class="btn btn-outline-danger btn-sm py-0"><i class="mdi mdi-lock-remove me-1"></i>Buka Hasil</a>
+                                        <a href="{{ route('user.psycholog.checkout', [$pu->psycholog->uuid, $pu->uuid]) }}" class="btn btn-outline-danger btn-sm py-0"><i class="mdi mdi-lock-remove me-1"></i>Buka Hasil</a>
                                         @else
                                             {{ $pu->point }}
                                         @endif

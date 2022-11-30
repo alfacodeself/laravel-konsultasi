@@ -170,8 +170,6 @@
                                 <li><i class="bx bx-check"></i> Nulla at volutpat diam uteera</li>
                                 <li class="na"><i class="bx bx-x"></i> <span>Pharetra massa massa ultricies</span>
                                 </li>
-                                <li class="na"><i class="bx bx-x"></i> <span>Massa ultricies mi quis
-                                        hendrerit</span></li>
                             </ul>
                             <a href="#" class="buy-btn">Get Started</a>
                         </div>

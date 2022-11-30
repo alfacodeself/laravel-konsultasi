@@ -27,7 +27,7 @@
                                         <input type="radio" name="{{ $question->uuid }}" id="{{ $answer->uuid }}" value="{{ $answer->uuid }}"
                                                 class="form-check-input">
                                         <label for="{{ $answer->uuid }}" class="form-label">
-                                            {{ $answer->jawaban }}
+                                            {{ $answer->jawaban }} <strong>({{ $answer->poin }} Poin)</strong>
                                         </label>
                                     </div>
                                     @endforeach
