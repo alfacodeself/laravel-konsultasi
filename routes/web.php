@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\Auth\{LoginAdminController, LogoutAdminController};
-use App\Http\Controllers\Admin\{DashboardController, PasienAdminController, PricingController, ProfileAdminController, PsychologAdminController, QuestionAdminController};
+use App\Http\Controllers\Admin\{DashboardController, PasienAdminController, PricingController, ProfileAdminController, PsychologAdminController, PsychologicalTestResultAdminController, QuestionAdminController};
+use App\Http\Controllers\Payment\TripayController;
 use App\Http\Controllers\User\Auth\{LoginController, LogoutController, RegisterController};
 use App\Http\Controllers\User\{DashboardUserController, ProfileUserController, PsychologUserController, TransactionUserController};
 use App\Http\Controllers\WelcomeController;
@@ -28,6 +29,10 @@ Route::prefix('admin')->middleware(SessionAdminLoginMiddleware::class)->as('admi
             Route::get('{question}/edit', [QuestionAdminController::class, 'edit'])->name('edit');
             Route::put('{question}/update', [QuestionAdminController::class, 'update'])->name('update');
             Route::delete('{question}/delete', [QuestionAdminController::class, 'destroy'])->name('destroy');
+        });
+        Route::prefix('{psycholog}/result')->as('result.')->group(function(){
+            Route::get('/', [PsychologicalTestResultAdminController::class, 'index'])->name('index');
+            Route::post('store', [PsychologicalTestResultAdminController::class, 'store'])->name('store');
         });
 
     });
@@ -91,3 +96,4 @@ Route::prefix('user')->as('user.')->middleware(SessionUserLoginMiddleware::class
         });
     });
 });
+Route::post('charge', [TripayController::class, 'handle'])->name('charge');

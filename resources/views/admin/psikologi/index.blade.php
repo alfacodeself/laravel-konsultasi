@@ -54,6 +54,7 @@
                                 @method('PUT')
                                 <button type="submit" class="dropdown-item">{{ $psycholog->status == 'nonaktif' ? 'Aktifkan' : 'Nonaktifkan' }}</button>
                             </form>
+                            <a href="{{ route('admin.psycholog.result.index', $psycholog->uuid) }}" class="dropdown-item">Hasil Test</a>
                         </div>
                     </div>
                     

@@ -35,7 +35,7 @@
                                         </td>
                                         <td>
                                             @if ($transaction->type == 'psikolog')
-                                                {{ $transaction->product->judul }} <strong class="text-uppercase"> (Psikolog)</strong>
+                                                {{ $transaction->product->psycholog->judul }} <strong class="text-uppercase"> (Psikolog)</strong>
                                             @else
                                             <strong class="text-uppercase"> (Konseling)</strong>
                                             @endif

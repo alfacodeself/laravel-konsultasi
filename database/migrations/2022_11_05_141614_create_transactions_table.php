@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('merchant_ref');
             $table->integer('total_amount');
             $table->enum('type', ['konseling', 'psikolog']);
-            $table->enum('status', ['paid', 'unpaid'])->default('unpaid');
+            $table->enum('status', ['paid', 'unpaid', 'expired', 'failed'])->default('unpaid');
             $table->timestamps();
         });
     }

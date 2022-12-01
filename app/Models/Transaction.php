@@ -17,7 +17,7 @@ class Transaction extends Model
     }
     public function psycholog()
     {
-        return $this->belongsTo(Psycholog::class, 'barang_id', 'id');
+        return $this->belongsTo(PsychologUser::class, 'barang_id', 'id');
     }
     public function getProductAttribute()
     {
