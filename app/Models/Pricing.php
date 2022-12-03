@@ -14,4 +14,8 @@ class Pricing extends Model
     {
         return 'uuid';
     }
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
 }

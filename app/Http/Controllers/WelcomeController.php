@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Answer;
+use App\Models\Pricing;
 use App\Models\Psycholog;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -14,8 +15,11 @@ class WelcomeController extends Controller
     public function index()
     {
         $psychologs = Psycholog::where('status', 'aktif')->get();
-        // dd($satuan);
-        return view('welcome', compact('psychologs'));
+        $pricings = Pricing::where('status', 'aktif')->get()->map(function($pricing){
+            $pricing->fitur_paket = explode('|', $pricing->fitur_paket);
+            return $pricing;
+        });
+        return view('welcome', compact('psychologs', 'pricings'));
     }
     public function psycholog(Psycholog $psycholog)
     {

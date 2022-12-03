@@ -4,7 +4,7 @@ use App\Http\Controllers\Admin\Auth\{LoginAdminController, LogoutAdminController
 use App\Http\Controllers\Admin\{DashboardController, PasienAdminController, PricingController, ProfileAdminController, PsychologAdminController, PsychologicalTestResultAdminController, QuestionAdminController};
 use App\Http\Controllers\Payment\TripayController;
 use App\Http\Controllers\User\Auth\{LoginController, LogoutController, RegisterController};
-use App\Http\Controllers\User\{DashboardUserController, ProfileUserController, PsychologUserController, TransactionUserController};
+use App\Http\Controllers\User\{DashboardUserController, JadwalUserController, ProfileUserController, PsychologUserController, TransactionUserController};
 use App\Http\Controllers\WelcomeController;
 use App\Http\Middleware\{SessionAdminLoginMiddleware, SessionUserLoginMiddleware};
 use Illuminate\Support\Facades\Route;
@@ -83,9 +83,16 @@ Route::prefix('user')->as('user.')->middleware(SessionUserLoginMiddleware::class
         Route::get('{psycholog}/detail', [PsychologUserController::class, 'show'])->name('show');
         Route::get('{psycholog}/{psycholog_user}/checkout', [PsychologUserController::class, 'checkout'])->name('checkout');
     });
+    Route::prefix('konseling')->as('konseling.')->group(function(){
+        Route::get('/', [JadwalUserController::class, 'index'])->name('index');
+        Route::get('{pricing}/create', [JadwalUserController::class, 'create'])->name('create');
+        Route::post('{pricing}/store', [JadwalUserController::class, 'store'])->name('store');
+        Route::get('{schedule}/checkout', [JadwalUserController::class, 'checkout'])->name('checkout');
+    });
     Route::prefix('transaksi')->as('transaksi.')->group(function(){
         Route::get('/', [TransactionUserController::class, 'index'])->name('index');
-        Route::post('{psycholog_user}/store', [TransactionUserController::class, 'store'])->name('store');
+        Route::post('{psycholog_user}/psycholog/store', [TransactionUserController::class, 'storePsycholog'])->name('psycholog.store');
+        Route::post('{schedule}/schedule/store', [TransactionUserController::class, 'storeSchedule'])->name('schedule.store');
         Route::get('{reference}/show', [TransactionUserController::class, 'show'])->name('show');
     });
     Route::prefix('pengaturan')->as('pengaturan.')->group(function(){

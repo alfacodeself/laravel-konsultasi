@@ -24,6 +24,6 @@ class PsychologUser extends Model
     }
     public function transactions()
     {
-        return $this->hasMany(Transaction::class, 'barang_id', 'id');
+        return $this->morphMany(Transaction::class, 'transactionable');
     }
 }

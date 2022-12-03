@@ -31,4 +31,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(PsychologUser::class);
     }
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
 }

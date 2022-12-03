@@ -11,11 +11,10 @@
                 {{-- @dd($payments) --}}
                 @foreach ($payments as $payment)
                 <div class="col-md-4">
-                    <form action="{{ route('user.transaksi.store', $psycholog_user->uuid) }}" method="POST">
+                    <form action="{{ route('user.transaksi.psycholog.store', $psycholog_user->uuid) }}" method="POST">
                         @method('POST')
                         @csrf
                         <input type="hidden" name="method" value="{{ $payment->code }}">
-                        <input type="hidden" name="type" value="psikolog">
                         <button type="submit" class="card p-2 shadow-lg" style="height: 11rem; width:100%; cursor: pointer;">
                             <img class="card-img-top" src="{{ url($payment->icon_url) }}" alt="">
                             <div class="card-body">

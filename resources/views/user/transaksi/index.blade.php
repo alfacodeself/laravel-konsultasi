@@ -34,11 +34,7 @@
                                             </span>
                                         </td>
                                         <td>
-                                            @if ($transaction->type == 'psikolog')
-                                                {{ $transaction->product->psycholog->judul }} <strong class="text-uppercase"> (Psikolog)</strong>
-                                            @else
-                                            <strong class="text-uppercase"> (Konseling)</strong>
-                                            @endif
+                                            {{ $transaction->transactionable->psycholog->judul ?? $transaction->transactionable->pricing->nama_paket }}
                                         </td>
                                         <td>{{ 'Rp.' . number_format($transaction->total_amount) }}</td>
                                         <td>

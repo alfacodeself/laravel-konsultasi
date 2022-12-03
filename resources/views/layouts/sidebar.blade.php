@@ -39,7 +39,7 @@
 
                     <li class="menu-title mt-2">Features</li>
                     <li>
-                        <a href="#">
+                        <a href="">
                             <i class="mdi mdi-forum-outline"></i>
                             <span> Konseling </span>
                         </a>
@@ -59,14 +59,20 @@
                     </li>
                     <li>
                         <a href="{{ route('admin.pasien.index') }}">
+                            <i class="mdi mdi-calendar-blank-outline"></i>
+                            <span> Jadwal Konseling </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.pasien.index') }}">
                             <i class="mdi mdi-account-box-multiple-outline"></i>
-                            <span> Data Pasien </span>
+                            <span> Pasien </span>
                         </a>
                     </li>
                     <li>
                         <a href="#">
                             <i class="mdi mdi-file-document-multiple-outline"></i>
-                            <span> Data Transaksi </span>
+                            <span> Transaksi </span>
                         </a>
                     </li>
                     <li class="menu-title mt-2">Settings</li>
@@ -86,7 +92,7 @@
                     </li>
                     <li class="menu-title">Feature</li>
                     <li>
-                        <a href="#">
+                        <a href="{{ route('user.konseling.index') }}">
                             <i class="mdi mdi-forum-outline"></i>
                             <span> Konseling </span>
                         </a>

@@ -8,24 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     use HasFactory;
+    protected $table = 'transactions';
     protected $guarded = [];
-    protected $append = ['product'];
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-    public function psycholog()
+    public function transactionable()
     {
-        return $this->belongsTo(PsychologUser::class, 'barang_id', 'id');
-    }
-    public function getProductAttribute()
-    {
-        if ($this->type == 'psikolog') {
-            return $this->psycholog;
-        }
-        elseif ($this->type == 'konseling') {
-            return 'konseling';
-        }
+        return $this->morphTo();
     }
 }

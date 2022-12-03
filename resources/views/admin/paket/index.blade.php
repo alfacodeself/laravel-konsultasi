@@ -43,64 +43,54 @@
         <!-- end row -->
         <div class="row">
             @forelse ($pricings as $paket)
-                <div class="col-xl-3 bg-white shadow p-3 rounded">
-                    {{-- <div class="card" style=""> --}}
-                        {{-- <div class="text-center card-body"> --}}
-                            <div class="dropdown float-end">
-                                <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <i class="mdi mdi-dots-vertical text-dark"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <button 
-                                        type="button" 
-                                        class="dropdown-item" 
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#edit-modal"
-                                        data-nama="{{ $paket->nama_paket }}"
-                                        data-sesi="{{ $paket->sesi }}"
-                                        data-harga="{{ $paket->harga_paket }}"
-                                        data-route="{{ route('admin.pricing.update', $paket->uuid) }}"
-                                        data-fitur="{{ implode('|', $paket->fitur_paket) }}">Edit Paket</button>
-                                    <form action="{{ route('admin.pricing.destroy', $paket->uuid) }}" class="d-inline" method="post">
-                                        @csrf
-                                        @method('PUT')
-                                        <button type="submit" class="dropdown-item">{{ $paket->status == 'aktif' ? 'Nonaktifkan' : 'Aktifkan' }}</button>
-                                    </form>
-                                </div>
-                            </div>
-
-                            <div>
-                                <h4 class="card-title text-center">{{ $paket->nama_paket }}</h4>
-                                <hr>
-                                <div class="text-start text-capitalize">
-                                    <b class="text-dark">Sesi</b>
-                                    <p class="text-muted font-13 text-dark">
-                                        <span class="ms-2">
-                                            {{ $paket->sesi }} Sesi
-                                        </span>
-                                    </p>
-                                </div>
-                                <div class="text-start text-capitalize">
-                                    <b class="text-dark">Harga</b>
-                                    <p class="text-muted font-13 text-dark">
-                                        <span class="ms-2">
-                                            {{ 'Rp.' . number_format($paket->harga_paket) }}
-                                        </span>
-                                    </p>
-                                </div>
-                                <div class="text-start text-capitalize">
-                                    <b class="text-dark">Fitur</b>
-                                    @foreach ($paket->fitur_paket as $paket)
-                                    <p class="text-muted font-13 text-dark">
-                                        <span class="ms-2">
-                                            {{ $paket }}
-                                        </span>
-                                    </p>
-                                    @endforeach
-                                </div>
-                            </div>
+                <div class="col-xl-3 bg-white shadow mx-1 p-3 rounded">
+                    <div class="dropdown float-end">
+                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="mdi mdi-dots-vertical text-dark"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit-modal"
+                                data-nama="{{ $paket->nama_paket }}" data-sesi="{{ $paket->sesi }}"
+                                data-harga="{{ $paket->harga_paket }}"
+                                data-route="{{ route('admin.pricing.update', $paket->uuid) }}"
+                                data-fitur="{{ implode('|', $paket->fitur_paket) }}">Edit Paket</button>
+                            <form action="{{ route('admin.pricing.destroy', $paket->uuid) }}" class="d-inline"
+                                method="post">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit"
+                                    class="dropdown-item">{{ $paket->status == 'aktif' ? 'Nonaktifkan' : 'Aktifkan' }}</button>
+                            </form>
                         </div>
+                    </div>
+                    <h4 class="card-title text-center">{{ $paket->nama_paket }}</h4>
+                    <hr>
+                    <div class="text-start text-capitalize">
+                        <b class="text-dark">Sesi</b>
+                        <p class="text-muted font-13 text-dark">
+                            <span class="ms-2">
+                                {{ $paket->sesi }} Sesi
+                            </span>
+                        </p>
+                    </div>
+                    <div class="text-start text-capitalize">
+                        <b class="text-dark">Harga</b>
+                        <p class="text-muted font-13 text-dark">
+                            <span class="ms-2">
+                                {{ 'Rp.' . number_format($paket->harga_paket) }}
+                            </span>
+                        </p>
+                    </div>
+                    <div class="text-start text-capitalize">
+                        <b class="text-dark">Fitur</b>
+                        @foreach ($paket->fitur_paket as $paket)
+                            <p class="text-muted font-13 text-dark">
+                                <span class="ms-2">
+                                    {{ $paket }}
+                                </span>
+                            </p>
+                        @endforeach
                     </div>
                 </div>
             @empty
@@ -111,109 +101,110 @@
                 </div>
             @endforelse
         </div>
+    </div>
 
-        <div class="modal fade" id="add-modal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header bg-light">
-                        <h4 class="modal-title" id="myCenterModalLabel">Buat Paket Sesi Baru</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('admin.pricing.store') }}" method="POST">
-                            @csrf
-                            @method('POST')
-                            <div class="mb-2">
-                                <label for="nama_paket" class="form-label">Nama Paket</label>
-                                <input type="text" class="form-control" id="nama_paket" name="nama_paket"
-                                    placeholder="Nama Paket" value="{{ old('nama_paket') }}">
-                                @error('nama_paket')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="mb-2">
-                                <label for="sesi" class="form-label">Jumlah Sesi</label>
-                                <input type="number" class="form-control" id="sesi" name="sesi"
-                                    placeholder="Jumlah Sesi" value="{{ old('sesi') }}">
-                                @error('sesi')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @else
-                                    <small class="text-info">Satu sesi adalah 60 menit!</small>
-                                @enderror
-                            </div>
-                            <div class="mb-2">
-                                <label for="harga_paket" class="form-label">Harga Paket (Rp)</label>
-                                <input type="number" class="form-control" id="harga_paket" name="harga_paket"
-                                    placeholder="Harga Paket" value="{{ old('harga') }}">
-                                @error('harga')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="mb-2">
-                                <label for="fitur" class="form-label">Fitur</label>
-                                <br>
-                                <table class="fitur-field">
-                                </table>
-                            </div>
-                            <button type="submit" class="btn btn-primary waves-effect waves-light">Simpan</button>
-                            <button type="button" class="btn btn-danger waves-effect waves-light"
-                                data-bs-dismiss="modal">Tutup</button>
-                        </form>
-                    </div>
+    <div class="modal fade" id="add-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <h4 class="modal-title" id="myCenterModalLabel">Buat Paket Sesi Baru</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('admin.pricing.store') }}" method="POST">
+                        @csrf
+                        @method('POST')
+                        <div class="mb-2">
+                            <label for="nama_paket" class="form-label">Nama Paket</label>
+                            <input type="text" class="form-control" id="nama_paket" name="nama_paket"
+                                placeholder="Nama Paket" value="{{ old('nama_paket') }}">
+                            @error('nama_paket')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-2">
+                            <label for="sesi" class="form-label">Jumlah Sesi</label>
+                            <input type="number" class="form-control" id="sesi" name="sesi"
+                                placeholder="Jumlah Sesi" value="{{ old('sesi') }}">
+                            @error('sesi')
+                                <small class="text-danger">{{ $message }}</small>
+                            @else
+                                <small class="text-info">Satu sesi adalah 60 menit!</small>
+                            @enderror
+                        </div>
+                        <div class="mb-2">
+                            <label for="harga_paket" class="form-label">Harga Paket (Rp)</label>
+                            <input type="number" class="form-control" id="harga_paket" name="harga_paket"
+                                placeholder="Harga Paket" value="{{ old('harga') }}">
+                            @error('harga')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-2">
+                            <label for="fitur" class="form-label">Fitur</label>
+                            <br>
+                            <table class="fitur-field">
+                            </table>
+                        </div>
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">Simpan</button>
+                        <button type="button" class="btn btn-danger waves-effect waves-light"
+                            data-bs-dismiss="modal">Tutup</button>
+                    </form>
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header bg-light">
-                        <h4 class="modal-title" id="myCenterModalLabel">Edit Paket Sesi</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="" class="modal-route" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <div class="mb-2">
-                                <label for="nama_paket" class="form-label">Nama Paket</label>
-                                <input type="text" class="form-control modal-nama" id="nama_paket" name="nama_paket"
-                                    placeholder="Nama Paket" value="{{ old('nama_paket') }}">
-                                @error('nama_paket')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="mb-2">
-                                <label for="sesi" class="form-label">Jumlah Sesi</label>
-                                <input type="number" class="form-control modal-sesi" id="sesi" name="sesi"
-                                    placeholder="Jumlah Sesi" value="{{ old('sesi') }}">
-                                @error('sesi')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @else
-                                    <small class="text-info">Satu sesi adalah 60 menit!</small>
-                                @enderror
-                            </div>
-                            <div class="mb-2">
-                                <label for="harga_paket" class="form-label">Harga Paket (Rp)</label>
-                                <input type="number" class="form-control modal-harga" id="harga_paket" name="harga_paket"
-                                    placeholder="Harga Paket" value="{{ old('harga') }}">
-                                @error('harga')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="mb-2">
-                                <label for="fitur" class="form-label">Fitur</label>
-                                <br>
-                                <table class="fitur-field">
-                                </table>
-                            </div>
-                            <button type="submit" class="btn btn-primary waves-effect waves-light">Ubah Paket</button>
-                            <button type="button" class="btn btn-danger waves-effect waves-light"
-                                data-bs-dismiss="modal">Tutup</button>
-                        </form>
-                    </div>
+    </div>
+    <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <h4 class="modal-title" id="myCenterModalLabel">Edit Paket Sesi</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="modal-route" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="mb-2">
+                            <label for="nama_paket" class="form-label">Nama Paket</label>
+                            <input type="text" class="form-control modal-nama" id="nama_paket" name="nama_paket"
+                                placeholder="Nama Paket" value="{{ old('nama_paket') }}">
+                            @error('nama_paket')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-2">
+                            <label for="sesi" class="form-label">Jumlah Sesi</label>
+                            <input type="number" class="form-control modal-sesi" id="sesi" name="sesi"
+                                placeholder="Jumlah Sesi" value="{{ old('sesi') }}">
+                            @error('sesi')
+                                <small class="text-danger">{{ $message }}</small>
+                            @else
+                                <small class="text-info">Satu sesi adalah 60 menit!</small>
+                            @enderror
+                        </div>
+                        <div class="mb-2">
+                            <label for="harga_paket" class="form-label">Harga Paket (Rp)</label>
+                            <input type="number" class="form-control modal-harga" id="harga_paket" name="harga_paket"
+                                placeholder="Harga Paket" value="{{ old('harga') }}">
+                            @error('harga')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-2">
+                            <label for="fitur" class="form-label">Fitur</label>
+                            <br>
+                            <table class="fitur-field">
+                            </table>
+                        </div>
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">Ubah Paket</button>
+                        <button type="button" class="btn btn-danger waves-effect waves-light"
+                            data-bs-dismiss="modal">Tutup</button>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection
 @push('js')
@@ -248,9 +239,9 @@
             html += '<td width="100%"><input type="text" class="form-control" name="fitur[]"></td>';
             html +=
                 '<td><button class="btn btn-danger" type="button" id="remove_btn"><i class="ti-trash"></i></button></td>';
-                html += '</tr>';
-                $('.fitur-field').append(html)
-            });
+            html += '</tr>';
+            $('.fitur-field').append(html)
+        });
         $(document).on('click', '#remove_btn_edit', function() {
             $(this).closest('tr').remove();
         });
@@ -273,13 +264,19 @@
             fitur.forEach((e, k) => {
                 if (k == 0) {
                     html += '<tr>';
-                        html += '<td width="100%"><input type="text" class="form-control" name="fitur[]" value="'+e+'"></td>';
-                        html += '<td><button class="btn btn-info" type="button" id="add_btn_edit"><i class="ti-plus"></i></button></td>';
-                        html += '</tr>';
-                }else {
+                    html +=
+                        '<td width="100%"><input type="text" class="form-control" name="fitur[]" value="' +
+                        e + '"></td>';
+                    html +=
+                        '<td><button class="btn btn-info" type="button" id="add_btn_edit"><i class="ti-plus"></i></button></td>';
+                    html += '</tr>';
+                } else {
                     html += '<tr>';
-                    html += '<td width="100%"><input type="text" class="form-control" name="fitur[]" value="'+e+'"></td>';
-                    html += '<td><button class="btn btn-danger" type="button" id="remove_btn_edit"><i class="ti-trash"></i></button></td>';
+                    html +=
+                        '<td width="100%"><input type="text" class="form-control" name="fitur[]" value="' +
+                        e + '"></td>';
+                    html +=
+                        '<td><button class="btn btn-danger" type="button" id="remove_btn_edit"><i class="ti-trash"></i></button></td>';
                     html += '</tr>';
                 }
             });
