@@ -26,7 +26,7 @@
                                 </div>
                             </li>
                             @foreach ($chats as $chat)
-                            <li class="{{ $chat->type == 'admin' ? 'odd' : '' }}">
+                            <li class="{{ $chat->type == 'user' ? 'odd' : '' }}">
                                 <div class="message-list">
                                     <div class="chat-avatar">
                                         <img src="{{ asset($chat->chatable->foto) }}" alt="">
@@ -48,7 +48,7 @@
                 </div>
                 @if ($schedule->status == 'terima')
                 <div class="p-3 conversation-input border-top">
-                    <form action="{{ route('user.konseling.chat.store', $schedule->uuid) }}" method="post">
+                    <form action="{{ route('admin.konsultasi.chat.store', $schedule->uuid) }}" method="post">
                         @csrf
                         @method('POST')
                         <div class="row">

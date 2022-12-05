@@ -35,4 +35,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Schedule::class);
     }
+    public function chats()
+    {
+        return $this->morphMany(Chat::class, 'chatable');
+    }
 }

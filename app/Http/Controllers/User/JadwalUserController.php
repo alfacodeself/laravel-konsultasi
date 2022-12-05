@@ -48,11 +48,27 @@ class JadwalUserController extends Controller
         if ($schedule->status_pembayaran != "belum lunas") {
             return redirect()->back()->with('warning', 'Konseling telah dilunasi.');
         };
+        if ($schedule->status != 'proses') {
+            return redirect()->back()->with('error', 'Status jadwal tidak memenuhi!');
+            
+        }
         $schedule->pricing->fitur_paket = explode('|', $schedule->pricing->fitur_paket);
         // dd($schedule->pricing->fitur_paket);
         return view('user.konseling.checkout', [
             'schedule' => $schedule,
             'payments' => $tripay->getPaymentChannels() 
         ]);
+    }
+    public function cancel(Schedule $schedule)
+    {
+        if ($schedule->status_pembayaran != 'belum lunas') {
+            return back()->with('error', 'Pembayaran telah dilakukan. Tidak dapat membatalkan jadwal!');
+        }
+        try {
+            $schedule->update(['status' => 'batal']);
+            return redirect()->route('user.konseling.index')->with('success', 'Berhasil membatalkan jadwal!');
+        } catch (\Throwable $th) {
+            return back()->with('error', $th->getMessage());
+        }
     }
 }

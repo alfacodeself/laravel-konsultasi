@@ -17,5 +17,8 @@ class Admin extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
+    public function chats()
+    {
+        return $this->morphMany(Chat::class, 'chatable');
+    }
 }

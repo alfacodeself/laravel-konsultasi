@@ -129,18 +129,18 @@
                     @foreach ($psychologs as $psycholog)
                         <div class="col-md-3 my-1 mx-auto rounded p-0 bg-white shadow">
                             <div class="text-center card-body">
-                                  <img src="{{ url($psycholog->gambar) }}" class="img-fluid" style="max-height: 140px" alt="profile-image">
-                                  <h4 class="card-title">{{ $psycholog->judul }}</h4>
-                                  <p class="text-muted font-13">
-                                      {{ Str::limit($psycholog->deskripsi, 50, '.....') }}
-                                  </p>
-
-                                  <hr>
-                                  <a href="{{ route('psikologi.index', $psycholog->uuid) }}"
-                                      class="btn btn-outline-success py-1 btn-sm waves-effect waves-light">Lihat Tes
-                                      Psikolog</a>
-                              </div>
+                                <img src="{{ url($psycholog->gambar) }}" class="img-fluid" style="max-height: 140px"
+                                    alt="profile-image">
+                                <h4 class="card-title">{{ $psycholog->judul }}</h4>
+                                <p class="text-muted font-13">
+                                    {{ Str::limit($psycholog->deskripsi, 50, '.....') }}
+                                </p>
+                                <hr>
+                                <a href="{{ route('psikologi.index', $psycholog->uuid) }}"
+                                    class="btn btn-outline-info d-block py-1 btn-sm waves-effect waves-light">Lihat Tes
+                                    Psikolog</a>
                             </div>
+                        </div>
                     @endforeach
                 </div>
 
@@ -160,18 +160,20 @@
 
                 <div class="row">
                     @foreach ($pricings as $pricing)
-                    <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="200">
-                        <div class="box shadow-lg featured">
-                            <h3 class="text-capitalize">{{ $pricing->nama_paket }}</h3>
-                            <h4><sup>Rp.</sup>{{ number_format($pricing->harga_paket) }}<span>{{ $pricing->sesi }} SESI</span></h4>
-                            <ul>
-                                @foreach ($pricing->fitur_paket as $item)
-                                <li><i class="bx bx-check"></i> <span style="color: #000;">{{ $item }}</span></li>
-                                @endforeach
-                            </ul>
-                            <center><a href="#" class="buy-btn">Get Started</a></center>
+                        <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="200">
+                            <div class="box shadow-lg featured">
+                                <h3 class="text-capitalize">{{ $pricing->nama_paket }}</h3>
+                                <h4><sup>Rp.</sup>{{ number_format($pricing->harga_paket) }}<span>{{ $pricing->sesi }}
+                                        SESI</span></h4>
+                                <ul>
+                                    @foreach ($pricing->fitur_paket as $item)
+                                        <li><i class="bx bx-check"></i> <span
+                                                style="color: #000;">{{ $item }}</span></li>
+                                    @endforeach
+                                </ul>
+                                <center><a href="#" class="buy-btn">Get Started</a></center>
+                            </div>
                         </div>
-                    </div>
                     @endforeach
                 </div>
 

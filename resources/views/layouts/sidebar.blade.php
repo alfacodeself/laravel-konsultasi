@@ -36,14 +36,6 @@
                             <span> Beranda </span>
                         </a>
                     </li>
-
-                    <li class="menu-title mt-2">Features</li>
-                    <li>
-                        <a href="">
-                            <i class="mdi mdi-forum-outline"></i>
-                            <span> Konseling </span>
-                        </a>
-                    </li>
                     <li class="menu-title mt-2">Data</li>
                     <li>
                         <a href="{{ route('admin.psycholog.index') }}">
@@ -58,7 +50,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.pasien.index') }}">
+                        <a href="{{ route('admin.konsultasi.index') }}">
                             <i class="mdi mdi-calendar-blank-outline"></i>
                             <span> Jadwal Konseling </span>
                         </a>

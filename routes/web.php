@@ -1,12 +1,13 @@
 <?php
 
 use App\Http\Controllers\Admin\Auth\{LoginAdminController, LogoutAdminController};
-use App\Http\Controllers\Admin\{DashboardController, PasienAdminController, PricingController, ProfileAdminController, PsychologAdminController, PsychologicalTestResultAdminController, QuestionAdminController};
+use App\Http\Controllers\Admin\{DashboardController, JadwalAdminController, PasienAdminController, PricingController, ProfileAdminController, PsychologAdminController, PsychologicalTestResultAdminController, QuestionAdminController};
+use App\Http\Controllers\KonselingChatController;
 use App\Http\Controllers\Payment\TripayController;
 use App\Http\Controllers\User\Auth\{LoginController, LogoutController, RegisterController};
 use App\Http\Controllers\User\{DashboardUserController, JadwalUserController, ProfileUserController, PsychologUserController, TransactionUserController};
 use App\Http\Controllers\WelcomeController;
-use App\Http\Middleware\{SessionAdminLoginMiddleware, SessionUserLoginMiddleware};
+use App\Http\Middleware\{KonselingChatMiddleware, SessionAdminLoginMiddleware, SessionUserLoginMiddleware};
 use Illuminate\Support\Facades\Route;
 
 
@@ -43,7 +44,12 @@ Route::prefix('admin')->middleware(SessionAdminLoginMiddleware::class)->as('admi
         Route::delete('{user}/delete', [PasienAdminController::class, 'destroy'])->name('destroy');
     });
     Route::prefix('konsultasi')->as('konsultasi.')->group(function(){
-        Route::view('/', 'admin.konsultasi.index')->name('index');
+        Route::get('/', [JadwalAdminController::class, 'index'])->name('index');
+        Route::post('{schedule}/store', [JadwalAdminController::class, 'store'])->name('store');
+        Route::post('{schedule}/finish', [JadwalAdminController::class, 'finish'])->name('finish');
+        
+        Route::get('{schedule}/chat', [KonselingChatController::class, 'adminChat'])->name('chat');
+        Route::post('{schedule}/chat', [KonselingChatController::class, 'adminChatStore'])->name('chat.store');
     });
     Route::prefix('pricing')->as('pricing.')->group(function(){
         Route::get('/', [PricingController::class, 'index'])->name('index');
@@ -88,6 +94,9 @@ Route::prefix('user')->as('user.')->middleware(SessionUserLoginMiddleware::class
         Route::get('{pricing}/create', [JadwalUserController::class, 'create'])->name('create');
         Route::post('{pricing}/store', [JadwalUserController::class, 'store'])->name('store');
         Route::get('{schedule}/checkout', [JadwalUserController::class, 'checkout'])->name('checkout');
+        Route::post('{schedule}/cancel', [JadwalUserController::class, 'cancel'])->name('cancel');
+        Route::get('{schedule}/chat', [KonselingChatController::class, 'userChat'])->name('chat')->middleware('lock');
+        Route::post('{schedule}/chat', [KonselingChatController::class, 'userChatStore'])->name('chat.store');
     });
     Route::prefix('transaksi')->as('transaksi.')->group(function(){
         Route::get('/', [TransactionUserController::class, 'index'])->name('index');

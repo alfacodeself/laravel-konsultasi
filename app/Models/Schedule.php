@@ -26,4 +26,8 @@ class Schedule extends Model
     {
         return $this->morphOne(Transaction::class, 'transactionable');
     }
+    public function chats()
+    {
+        return $this->hasMany(Chat::class);
+    }
 }

@@ -60,15 +60,20 @@
                                                 @if ($schedule->status_pembayaran == 'lunas')
                                                     {{-- Kalau lunas dan diterima --}}
                                                     @if ($schedule->status == 'terima')
-                                                        <a href="#" class="btn btn-outline-info btn-sm py-0">
+                                                        <a href="{{ route('user.konseling.chat', $schedule->uuid) }}" class="btn btn-outline-info btn-sm py-0">
                                                             <i class="mdi mdi-chat-plus me-1"></i>
                                                             Mulai Konseling
                                                         </a>
                                                         {{-- Kalau lunas dan selesai --}}
                                                     @elseif ($schedule->status == 'selesai')
-                                                        <a href="#" class="btn btn-outline-success btn-sm py-0">
+                                                        <a href="{{ route('user.konseling.chat', $schedule->uuid) }}" class="btn btn-outline-success btn-sm py-0">
                                                             <i class="mdi mdi-chat-processing me-1"></i>
                                                             Histori Konseling
+                                                        </a>
+                                                    @elseif ($schedule->status == 'proses')
+                                                        <a href="{{ route('user.konseling.chat', $schedule->uuid) }}" class="btn btn-outline-warning btn-sm py-0">
+                                                            <i class="mdi mdi-chat-remove me-1"></i>
+                                                            Konseling Belum Disetujui
                                                         </a>
                                                     @endif
                                                     {{-- Kalau belum lunas --}}
@@ -81,20 +86,26 @@
                                             </td>
                                             <td>
                                                 @if ($schedule->status_pembayaran == 'lunas')
-                                                    <a href="{{ route('user.transaksi.show', $schedule->transaction->reference  ) }}" class="btn btn-outline-info btn-sm py-0">
+                                                    <a href="{{ route('user.transaksi.show', $schedule->transaction->reference) }}"
+                                                        class="btn btn-outline-info btn-sm py-0">
                                                         <i class="mdi mdi-clipboard-check-multiple-outline me-1"></i>
                                                         Bukti Transaksi
                                                     </a>
                                                 @else
                                                     @if ($schedule->status != 'batal')
-                                                        <a href="{{ route('user.konseling.checkout', $schedule->uuid) }}" class="btn btn-outline-info btn-sm py-0">
+                                                        <a href="{{ route('user.konseling.checkout', $schedule->uuid) }}"
+                                                            class="btn btn-outline-info btn-sm py-0">
                                                             <i class="mdi mdi-credit-card-sync me-1"></i>
                                                             Bayar
                                                         </a>
-                                                        <a href="#" class="btn btn-outline-danger btn-sm py-0">
-                                                            <i class="mdi mdi-close-box-multiple me-1"></i>
-                                                            Batalkan
-                                                        </a>
+                                                        <form action="{{ route('user.konseling.cancel', $schedule->uuid) }}" method="post" class="d-inline">
+                                                            @csrf
+                                                            @method('POST')
+                                                            <button type="submit" class="btn btn-outline-danger btn-sm py-0">
+                                                                <i class="mdi mdi-close-box-multiple me-1"></i>
+                                                                Batalkan
+                                                            </button>
+                                                        </form>
                                                     @else
                                                         Jadwal dibatalkan
                                                     @endif
