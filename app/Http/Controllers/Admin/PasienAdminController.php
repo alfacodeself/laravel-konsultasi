@@ -13,7 +13,11 @@ class PasienAdminController extends Controller
 {
     public function index()
     {
-        $pasien = User::paginate(10);
+        $pasien = User::query();
+        if (request()->has('search')) {
+            $pasien = $pasien->where('nama', 'like', '%' . request()->search . '%')->orWhere('email', 'like', '%' . request()->search . '%');
+        }
+        $pasien = $pasien->paginate(10);
         return view('admin.user.index', compact('pasien'));
     }
     public function store(UserRequest $request)

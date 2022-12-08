@@ -22,8 +22,12 @@ class RedirectIfAuthenticated
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
+            if ($guard = 'admin' && Auth::guard($guard)->check()) {
+                return redirect()->route('admin.dashboard')->with('danger', 'Tidak bisa mengunjungi halaman ketika anda sedang login!');
+            }
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                return redirect()->route('user.dashboard')->with('danger', 'Tidak bisa mengunjungi halaman ketika anda sedang login!');
+                // return redirect(RouteServiceProvider::HOME);
             }
         }
 

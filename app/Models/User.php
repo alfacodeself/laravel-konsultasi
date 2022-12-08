@@ -23,10 +23,6 @@ class User extends Authenticatable
     {
         return 'uuid';
     }
-    public function transactions()
-    {
-        return $this->hasMany(Transaction::class);
-    }
     public function psycholog_users()
     {
         return $this->hasMany(PsychologUser::class);

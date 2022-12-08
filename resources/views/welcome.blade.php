@@ -65,7 +65,13 @@
                         amet consectetur adipisicing elit. Error nisi eaque vel maiores excepturi, similique suscipit
                         aliquid quis velit beatae fuga.</h2>
                     <div class="d-flex justify-content-center justify-content-lg-start">
-                        <a href="{{ route('login') }}" class="btn-get-started scrollto">Sign In</a>
+                        @if (auth('admin')->check())
+                            <a href="{{ route('admin.dashboard') }}" class="btn-get-started scrollto">Dashboard</a>
+                        @elseif (auth('user')->check())
+                            <a href="{{ route('user.dashboard') }}" class="btn-get-started scrollto">Dashboard</a>
+                        @else
+                            <a href="{{ route('login') }}" class="btn-get-started scrollto">Sign In</a>
+                        @endif
                     </div>
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
@@ -125,19 +131,21 @@
                         ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
                 </div>
 
-                <div class="row">
+                <div class="row justify-content-center">
                     @foreach ($psychologs as $psycholog)
-                        <div class="col-md-3 my-1 mx-auto rounded p-0 bg-white shadow">
+                        <div class="col-md-3 my-1 mx-2 rounded p-0 bg-white shadow "
+                            style="min-height: 400px; position: relative;">
                             <div class="text-center card-body">
                                 <img src="{{ url($psycholog->gambar) }}" class="img-fluid" style="max-height: 140px"
-                                    alt="profile-image">
+                                    alt="psycholog-img">
                                 <h4 class="card-title">{{ $psycholog->judul }}</h4>
                                 <p class="text-muted font-13">
-                                    {{ Str::limit($psycholog->deskripsi, 50, '.....') }}
+                                    {{ Str::limit($psycholog->deskripsi, 150, '.....') }}
                                 </p>
                                 <hr>
                                 <a href="{{ route('psikologi.index', $psycholog->uuid) }}"
-                                    class="btn btn-outline-info d-block py-1 btn-sm waves-effect waves-light">Lihat Tes
+                                    class="btn btn-outline-info d-block py-1 btn-sm waves-effect waves-light"
+                                    style="position: absolute; bottom: 20px; width: 89%">Lihat Tes
                                     Psikolog</a>
                             </div>
                         </div>
@@ -160,7 +168,7 @@
 
                 <div class="row">
                     @foreach ($pricings as $pricing)
-                        <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="200">
+                        <div class="col-lg-4 mt-4 mt-lg-0 mb-2" data-aos="fade-up" data-aos-delay="200">
                             <div class="box shadow-lg featured">
                                 <h3 class="text-capitalize">{{ $pricing->nama_paket }}</h3>
                                 <h4><sup>Rp.</sup>{{ number_format($pricing->harga_paket) }}<span>{{ $pricing->sesi }}

@@ -16,6 +16,9 @@ class SessionAdminLoginMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+        if (auth('user')->check()) {
+            return back()->with('error', 'Anda telah terdeteksi sebagai user! Harap logout terlebih dahulu!');
+        }
         if (!auth()->guard('admin')->check()) {
             return redirect()->route('admin.login')->with('warning', 'Session tidak ditemukan! Silakan Login');
         }

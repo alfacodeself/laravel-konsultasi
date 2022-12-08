@@ -18,6 +18,9 @@ class LoginAdminController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:8'
         ]);
+        if (Auth::guard('user')->check()) {
+            return back()->with('error', 'Anda telah terdeteksi login sebagai user! Harap logout terlebih dahulu!');
+        }
         try {
             if (!Auth::guard('admin')->attempt($credential, true)) {
                 return redirect()->route('admin.login')->withErrors([

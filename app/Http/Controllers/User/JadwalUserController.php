@@ -13,7 +13,7 @@ class JadwalUserController extends Controller
 {
     public function index()
     {
-        $schedules = Schedule::latest()->get();
+        $schedules = auth('user')->user()->schedules;
         // dd($schedules);
         return view('user.konseling.index', compact('schedules'));
     }

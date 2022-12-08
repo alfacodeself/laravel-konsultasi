@@ -40,7 +40,8 @@ class WelcomeController extends Controller
         try {
             $totalPoint = Answer::whereIn('uuid', $request->jawaban)->sum('poin');
             if (!auth('user')->check()) {
-                return redirect()->route('login')->with(['point' => $totalPoint, 'psycholog' => $psycholog->uuid, 'warning' => 'Silakan login untuk melihat hasil tes psikologi']);
+                session()->put(['point' => $totalPoint, 'psycholog' => $psycholog->uuid, 'warning' => 'Silakan login atau register untuk melihat hasil tes psikologi']);
+                return redirect()->route('login');
             }
             else {
                 PsychologUser::create([
@@ -53,7 +54,7 @@ class WelcomeController extends Controller
                 return redirect()->route('user.dashboard')->with('success', 'Berhasil menyelesaikan tes psikologi ' . $psycholog->judul);
             }
         } catch (\Throwable $th) {
-            return $th->getMessage();
+            return back()->with('error', $th->getMessage());
         }
     }
 }

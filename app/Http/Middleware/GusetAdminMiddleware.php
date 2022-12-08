@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class SessionUserLoginMiddleware
+class GusetAdminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,11 +16,8 @@ class SessionUserLoginMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth('admin')->check()) {
-            return back()->with('error', 'Anda telah terdeteksi sebagai admin! Harap logout terlebih dahulu!');
-        }
-        if (!auth()->guard('user')->check()) {
-            return redirect()->route('login')->with('warning', 'Session tidak ditemukan! Silakan Login');
+        if (auth()->guard('admin')->check()) {
+            return redirect()->route('admin.dashboard')->with('error', 'Tidak bisa mengunjungi halaman ketika anda sedang login!');
         }
         return $next($request);
     }

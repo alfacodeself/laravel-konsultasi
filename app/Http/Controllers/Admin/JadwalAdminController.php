@@ -10,7 +10,7 @@ class JadwalAdminController extends Controller
 {
     public function index()
     {
-        $schedules = Schedule::where('status_pembayaran', 'lunas')->get();
+        $schedules = Schedule::where('status_pembayaran', 'lunas')->paginate(10);
         return view('admin.konseling.index', compact('schedules'));
     }
     public function store(Schedule $schedule, Request $request)

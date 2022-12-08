@@ -15,8 +15,8 @@
 
                         <div class="widget-box-2">
                             <div class="widget-detail-2 text-end">
-                                <span class="badge bg-success rounded-pill float-start mt-3">32 Soal <i class="mdi mdi-help-circle-outline"></i> </span>
-                                <h2 class="fw-normal mb-1"> 8451 </h2>
+                                <span class="badge bg-success rounded-pill float-start mt-3">{{ $soal }} Soal <i class="mdi mdi-help-circle-outline"></i> </span>
+                                <h2 class="fw-normal mb-1"> {{ $tes }} </h2>
                                 <p class="text-muted">Total Tes Psikologi</p>
                             </div>
                         </div>
@@ -30,8 +30,8 @@
 
                         <div class="widget-box-2">
                             <div class="widget-detail-2 text-end">
-                                <span class="badge bg-danger rounded-pill float-start mt-3">32 Jadwal <i class="mdi mdi-help-circle-outline"></i> </span>
-                                <h2 class="fw-normal mb-1"> 8451 </h2>
+                                <span class="badge bg-danger rounded-pill float-start mt-3">{{ $jadwal }} Jadwal <i class="mdi mdi-help-circle-outline"></i> </span>
+                                <h2 class="fw-normal mb-1"> {{ $konsel }} </h2>
                                 <p class="text-muted">Total Pasien</p>
                             </div>
                         </div>
@@ -45,8 +45,8 @@
 
                         <div class="widget-box-2">
                             <div class="widget-detail-2 text-end">
-                                <span class="badge bg-info rounded-pill float-start mt-3">300.000.000 <i class="mdi mdi-currency-usd"></i> </span>
-                                <h2 class="fw-normal mb-1"> 8451 </h2>
+                                <span class="badge bg-info rounded-pill float-start mt-3">{{ number_format($jumlah) }} <i class="mdi mdi-currency-usd"></i> </span>
+                                <h2 class="fw-normal mb-1"> {{ $trx }} </h2>
                                 <p class="text-muted">Total Transaksi</p>
                             </div>
                         </div>
@@ -60,8 +60,8 @@
 
                         <div class="widget-box-2">
                             <div class="widget-detail-2 text-end">
-                                <span class="badge bg-warning text-dark rounded-pill float-start mt-3">4 Aktif <i class="mdi mdi-check-all"></i> </span>
-                                <h2 class="fw-normal mb-1"> 5 </h2>
+                                <span class="badge bg-warning text-dark rounded-pill float-start mt-3">{{ $paketAkt }} Aktif <i class="mdi mdi-check-all"></i> </span>
+                                <h2 class="fw-normal mb-1"> {{ $paket }} </h2>
                                 <p class="text-muted">Total Paket</p>
                             </div>
                         </div>
@@ -86,28 +86,14 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- @foreach ($psycholog_users as $pu)
+                                    @foreach ($jdw as $j)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $pu->psycholog->judul }}</td>
-                                        <td>{{ $pu->user->nama }}</td>
-                                        <td>{{ $pu->created_at->format('Y-m-d H:i:s') }}</td>
-                                        <td>
-                                            @if ($pu->status == 'belum lunas')
-                                            <a href="" class="btn btn-outline-danger btn-sm py-0"><i class="mdi mdi-lock-remove me-1"></i>Buka Hasil</a>
-                                            @else
-                                                {{ $pu->point }}
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if ($pu->status == 'belum lunas')
-                                                -
-                                            @else
-                                                {{ $pu->point }}
-                                            @endif
-                                        </td>
+                                        <td class="text-capitalize">{{ $j->user->nama }}</td>
+                                        <td>{{ $j->pricing->nama_paket }}</td>
+                                        <td>{{ $j->jadwal_konseling }}</td>
                                     </tr>
-                                    @endforeach --}}
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

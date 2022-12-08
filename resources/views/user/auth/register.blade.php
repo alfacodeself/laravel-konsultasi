@@ -26,7 +26,7 @@
             <div class="container">
 
                 <div class="row justify-content-center">
-                    <div class="col-md-8 col-lg-6 col-xl-4">
+                    <div class="col-md-8 col-lg-6 col-xl-5">
                         <div class="text-center">   
                             <a href="#">
                                 <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" height="22" class="mx-auto">
@@ -38,22 +38,22 @@
                             <div class="card-body p-4">
                                 @include('partials.alert')
                                 
-                                <div class="text-center mb-4">
+                                <div class="text-center mb-1">
                                     <h4 class="text-uppercase mt-0">Register</h4>
                                 </div>
 
-                                <form method="POST" action="{{ route('admin.login') }}">
+                                <form method="POST" action="{{ route('register') }}">
                                     @csrf
                                     @method('POST')
                                     <div class="">
-                                        <label for="emailaddress" class="form-label">Email address</label>
-                                        <input class="form-control" type="email" id="emailaddress" value="{{ old('email') }}" name="email" required="" placeholder="Enter your email">
-                                        @error('email')
+                                        <label for="nama" class="form-label">Name</label>
+                                        <input class="form-control" type="text" id="nama" value="{{ old('nama') }}" name="nama" required="" placeholder="Enter your name">
+                                        @error('nama')
                                             <small class="text-danger fw-bold">{{ $message }}</small>
                                         @enderror
                                     </div>
                                     <div class="">
-                                        <label for="emailaddress" class="form-label">Email address</label>
+                                        <label for="emailaddress" class="form-label">Email</label>
                                         <input class="form-control" type="email" id="emailaddress" value="{{ old('email') }}" name="email" required="" placeholder="Enter your email">
                                         @error('email')
                                             <small class="text-danger fw-bold">{{ $message }}</small>
@@ -66,6 +66,10 @@
                                         @error('password')
                                             <small class="text-danger fw-bold">{{ $message }}</small>
                                         @enderror
+                                    </div>
+                                    <div class="">
+                                        <label for="password_confirmation" class="form-label">Confirm Password</label>
+                                        <input class="form-control" type="password" required="" name="password_confirmation" id="password_confirmation" placeholder="Confirm your password">
                                     </div>
                                     <div class="my-3 d-grid text-center">
                                         <button class="btn btn-primary" type="submit"> Log In </button>

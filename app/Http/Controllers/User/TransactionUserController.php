@@ -13,14 +13,21 @@ class TransactionUserController extends Controller
 {
     public function index()
     {
-        $transactions = Transaction::orderByRaw("FIELD(status, 'unpaid', 'paid') ASC")->get();
-        // dd($transactions[0]->product);
+        $transactions = Transaction::with('transactionable')
+            ->whereHas('schedules', fn ($q) => $q->where('user_id', auth('user')->id()))
+            ->orWhereHas('psycholog_users', fn ($q) => $q->where('user_id', auth('user')->id()))
+            ->orderByRaw("FIELD(status, 'unpaid', 'paid') ASC")
+            ->get();
+        // dd($transactions);
         return view('user.transaksi.index', compact('transactions'));
     }
     public function storePsycholog(Request $request, PsychologUser $psycholog_user)
     {
         if ($psycholog_user->user->id != auth('user')->id()) {
             return redirect()->back()->with('error', 'Anda tidak memiliki akses.');
+        }
+        if ($psycholog_user->transactions->where('status', 'unpaid')->count() != 0) {
+            return redirect()->back()->with('error', 'Anda memiliki transaksi yang sedang berjalan pada hasil tes psikolog ini!');
         }
         $tripay = new TripayController;
         $transaction = $tripay->requestTransaction($request->method, $psycholog_user);
@@ -41,6 +48,9 @@ class TransactionUserController extends Controller
         if ($schedule->user->id != auth('user')->id()) {
             return redirect()->back()->with('error', 'Anda tidak memiliki akses.');
         }
+        if ($schedule->transactions->where('status', 'unpaid')->count() != 0) {
+            return redirect()->back()->with('error', 'Anda memiliki transaksi yang sedang berjalan pada jadwal ini!');
+        }
         $tripay = new TripayController;
         $transaction = $tripay->requestTransactionKonseling($request->method, $schedule);
 
@@ -59,5 +69,19 @@ class TransactionUserController extends Controller
         $tripay = new TripayController;
         $detail = $tripay->detailTransaction($reference);
         return view('user.transaksi.show', compact('detail'));
+    }
+    public function detail($reference)
+    {
+        $transaction = Transaction::where('reference', $reference)->firstOrFail();
+        $transaction->user = $transaction->transactionable->user;
+        if ($transaction->transactionable instanceof PsychologUser) {
+            $transaction->item = $transaction->transactionable->psycholog->judul;
+            $transaction->type = 'PSIKOLOG';
+        }
+        elseif($transaction->transactionable instanceof Schedule){
+            $transaction->item = $transaction->transactionable->pricing->nama_paket;
+            $transaction->type = 'KONSELING';
+        }
+        return view('user.transaksi.detail', compact('transaction'));
     }
 }

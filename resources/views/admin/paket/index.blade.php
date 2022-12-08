@@ -27,11 +27,10 @@
                                 </div>
                             </div><!-- end col-->
                             <div class="col-md-8">
-                                <form class="d-flex flex-wrap align-items-center justify-content-sm-end">
+                                <form class="d-flex flex-wrap align-items-center justify-content-sm-end" method="GET">
                                     <label for="inputPassword2" class="visually-hidden">Search</label>
                                     <div>
-                                        <input type="search" class="form-control my-1 my-md-0" id="inputPassword2"
-                                            placeholder="Search...">
+                                        <input type="search" class="form-control my-1 my-md-0" name="search" value="{{ old('search', request()->search) }}" placeholder="Search...">
                                     </div>
                                 </form>
                             </div>
@@ -41,9 +40,9 @@
             </div><!-- end col-->
         </div>
         <!-- end row -->
-        <div class="row">
+        <div class="row justify-content-center">
             @forelse ($pricings as $paket)
-                <div class="col-xl-3 bg-white shadow mx-1 p-3 rounded">
+                <div class="col-3 mx-2 mb-2 bg-white shadow p-2 rounded">
                     <div class="dropdown float-end">
                         <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown"
                             aria-expanded="false">

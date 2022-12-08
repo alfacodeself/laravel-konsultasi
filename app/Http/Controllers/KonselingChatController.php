@@ -6,68 +6,53 @@ use App\Http\Middleware\KonselingChatMiddleware;
 use App\Models\Admin;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class KonselingChatController extends Controller
 {
-    
-    // For User
-    public function userChat(Schedule $schedule)
+    public function index(Schedule $schedule)
     {
-        $chats = $schedule->chats->map(function($chat) {
+        $chats = $schedule->chats->map(function ($chat) {
             $chat->type = $chat->chatable instanceof Admin ? 'admin' : 'user';
+            if (auth('admin')->check()) {
+                $chat->level = 'admin';
+            }elseif (auth('user')->check()) {
+                $chat->level = 'user';
+            }
             return $chat;
         });
-        // dd($chats);
-        return view('user.konseling.show', compact('chats', 'schedule'));
+        return view('read')->with(compact('chats'));
     }
-    public function userChatStore(Schedule $schedule, Request $request)
+    public function chat(Schedule $schedule)
     {
-        $request->validate([
-            'pesan' => 'required'
-        ], [
-            'pesan.required' => 'Pesan tidak boleh kosong'
-        ]);
-        if ($schedule->status == 'selesai') {
-            return back()->with('error', 'Konseling telah selesai');
-        }
-        if ($schedule->user->id != auth('user')->id()) {
-            abort(401, 'Anda tidak memiliki akses');
-        }
-        $user = auth('user')->user();
-        // dd($user);
-        try {
-            $user->chats()->create(['schedule_id' => $schedule->id, 'pesan' => $request->pesan]);
-            return redirect()->back();
-        } catch (\Throwable $th) {
-            return back()->with('error', $th->getMessage());
-        }
+        return view('chat', compact('schedule'));
     }
-    public function adminChat(Schedule $schedule)
+    public function store(Schedule $schedule, Request $request)
     {
-        $chats = $schedule->chats->map(function($chat) {
-            $chat->type = $chat->chatable instanceof Admin ? 'admin' : 'user';
-            return $chat;
-        });
-        // dd($chats);
-        return view('admin.konseling.chat', compact('chats', 'schedule'));
-    }
-    public function adminChatStore(Schedule $schedule, Request $request)
-    {
-        $request->validate([
-            'pesan' => 'required'
-        ], [
-            'pesan.required' => 'Pesan tidak boleh kosong'
-        ]);
-        if ($schedule->status == 'selesai') {
-            return back()->with('error', 'Konseling telah selesai');
-        }
-        // dd($request->all());
-        $admin = auth('admin')->user();
-        try {
-            $admin->chats()->create(['schedule_id' => $schedule->id, 'pesan' => $request->pesan]);
-            return redirect()->back();
-        } catch (\Throwable $th) {
-            return back()->with('error', $th->getMessage());
+        if ($request->ajax()) {
+            $request->validate([
+                'pesan' => 'required'
+            ], [
+                'pesan.required' => 'Pesan tidak boleh kosong'
+            ]);
+            if ($schedule->status == 'selesai') {
+                return response()->json(['message' => 'Konseling telah selesai'], Response::HTTP_EXPECTATION_FAILED);
+            }
+            if (auth('user')->check()) {
+                if ($schedule->user->id != auth('user')->id()) {
+                    return response()->json(['message' => 'Anda tidak memiliki akses!'], Response::HTTP_UNAUTHORIZED);
+                }
+                $model = auth('user')->user();
+            }
+            elseif (auth('admin')->check()) {
+                $model = auth('admin')->user();
+            }
+            try {
+                $model->chats()->create(['schedule_id' => $schedule->id, 'pesan' => $request->pesan]);
+                return response()->json(['message' => 'Success'], Response::HTTP_CREATED);
+            } catch (\Throwable $th) {
+                return response()->json(['message' => $th->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
         }
     }
 }

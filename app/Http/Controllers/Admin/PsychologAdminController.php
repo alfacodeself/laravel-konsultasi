@@ -13,8 +13,11 @@ class PsychologAdminController extends Controller
 {
     public function index()
     {
-        $psychologs = Psycholog::withCount('questions', 'psycholog_users')->get();
-        // dd($psychologs);
+        $psychologs = Psycholog::withCount('questions', 'psycholog_users');
+        if (request()->has('search')) {
+            $psychologs = $psychologs->where('judul', 'like', '%' . request()->search . '%');
+        }
+        $psychologs = $psychologs->get();
         return view('admin.psikologi.index', compact('psychologs'));
     }
     public function store(PsychologRequest $request)

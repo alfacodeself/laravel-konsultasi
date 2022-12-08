@@ -60,18 +60,21 @@
                                                 @if ($schedule->status_pembayaran == 'lunas')
                                                     {{-- Kalau lunas dan diterima --}}
                                                     @if ($schedule->status == 'terima')
-                                                        <a href="{{ route('user.konseling.chat', $schedule->uuid) }}" class="btn btn-outline-info btn-sm py-0">
+                                                        <a href="{{ route('chat', $schedule->uuid) }}"
+                                                            class="btn btn-outline-info btn-sm py-0">
                                                             <i class="mdi mdi-chat-plus me-1"></i>
                                                             Mulai Konseling
                                                         </a>
                                                         {{-- Kalau lunas dan selesai --}}
                                                     @elseif ($schedule->status == 'selesai')
-                                                        <a href="{{ route('user.konseling.chat', $schedule->uuid) }}" class="btn btn-outline-success btn-sm py-0">
+                                                        <a href="{{ route('chat', $schedule->uuid) }}"
+                                                            class="btn btn-outline-success btn-sm py-0">
                                                             <i class="mdi mdi-chat-processing me-1"></i>
                                                             Histori Konseling
                                                         </a>
                                                     @elseif ($schedule->status == 'proses')
-                                                        <a href="{{ route('user.konseling.chat', $schedule->uuid) }}" class="btn btn-outline-warning btn-sm py-0">
+                                                        <a href="{{ route('chat', $schedule->uuid) }}"
+                                                            class="btn btn-outline-warning btn-sm py-0">
                                                             <i class="mdi mdi-chat-remove me-1"></i>
                                                             Konseling Belum Disetujui
                                                         </a>
@@ -86,11 +89,12 @@
                                             </td>
                                             <td>
                                                 @if ($schedule->status_pembayaran == 'lunas')
-                                                    <a href="{{ route('user.transaksi.show', $schedule->transaction->reference) }}"
-                                                        class="btn btn-outline-info btn-sm py-0">
+                                                    <button type="button" class="btn btn-outline-info btn-sm py-0"
+                                                        data-bs-toggle="modal" data-bs-target="#bukti-modal"
+                                                        data-bukti="{{ json_encode($schedule->transactions) }}">
                                                         <i class="mdi mdi-clipboard-check-multiple-outline me-1"></i>
                                                         Bukti Transaksi
-                                                    </a>
+                                                    </button>
                                                 @else
                                                     @if ($schedule->status != 'batal')
                                                         <a href="{{ route('user.konseling.checkout', $schedule->uuid) }}"
@@ -98,10 +102,13 @@
                                                             <i class="mdi mdi-credit-card-sync me-1"></i>
                                                             Bayar
                                                         </a>
-                                                        <form action="{{ route('user.konseling.cancel', $schedule->uuid) }}" method="post" class="d-inline">
+                                                        <form
+                                                            action="{{ route('user.konseling.cancel', $schedule->uuid) }}"
+                                                            method="post" class="d-inline">
                                                             @csrf
                                                             @method('POST')
-                                                            <button type="submit" class="btn btn-outline-danger btn-sm py-0">
+                                                            <button type="submit"
+                                                                class="btn btn-outline-danger btn-sm py-0">
                                                                 <i class="mdi mdi-close-box-multiple me-1"></i>
                                                                 Batalkan
                                                             </button>
@@ -123,4 +130,58 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="bukti-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <h4 class="modal-title" id="myCenterModalLabel">Bukti Pembayaran</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Kode Reference</th>
+                                    <th>Total Bayar</th>
+                                    <th>Status</th>
+                                    <th>Tanggal</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bukti-bayar">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+@push('js')
+    <script>
+        $('#bukti-modal').on('show.bs.modal', function(e) {
+            const button = $(e.relatedTarget);
+            let bukti = button.data('bukti');
+            let modal = $(this);
+            var html = '';
+            bukti.forEach((e, k) => {
+                var url = '{{ route('user.transaksi.detail', "~id") }}';
+                url = url.replace("~id", e.reference)
+                console.log(url);
+                html += '<tr>';
+                html += '<td>' + (k + 1) + '</td>';
+                html += '<td>' + e.reference + '</td>';
+                html += '<td>' + e.total_amount + '</td>';
+                html += '<td class="text-uppercase">' + e.status + '</td>';
+                html += '<td>' + e.created_at + '</td>';
+                html += '<td><a href="'+url+'" class="btn btn-outline-success py-0">Detail</a></td>';
+                html += '</tr>';
+                $('#bukti-bayar').html(html)
+            })
+        })
+    </script>
+@endpush

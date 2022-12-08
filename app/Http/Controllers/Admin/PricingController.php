@@ -12,11 +12,14 @@ class PricingController extends Controller
 {
     public function index()
     {
-        $pricings = Pricing::get()->map(function($paket){
+        $pricings = Pricing::query();
+        if (request()->has('search')) {
+            $pricings = $pricings->where('nama_paket', 'like', '%' . request()->search . '%');
+        }
+        $pricings = $pricings->get()->map(function($paket){
             $paket->fitur_paket = explode('|', $paket->fitur_paket);
             return $paket;
         });
-        // dd($pricings);   
         return view('admin.paket.index', compact('pricings'));
     }
     public function store(PricingRequest $request)

@@ -52,10 +52,6 @@
                                             <small class="text-danger fw-bold">{{ $message }}</small>
                                         @enderror
                                     </div>
-                                    @if (session('point'))
-                                        <input type="hidden" name="point" value="{{ session('point') }}">
-                                        <input type="hidden" name="psycholog" value="{{ session('psycholog') }}">
-                                    @endif
                                     <div class="">
                                         <label for="password" class="form-label">Password</label>
                                         <input class="form-control" type="password" required="" name="password" id="password" placeholder="Enter your password">
@@ -67,7 +63,7 @@
                                         <button class="btn btn-primary" type="submit"> Log In </button>
                                     </div>
                                 </form>
-                                <p>Belum punya akun? Daftar <a href="">Disini</a></p>
+                                <p>Belum punya akun? Daftar <a href="{{ route('register') }}">Disini</a></p>
 
                             </div> <!-- end card-body -->
                         </div>

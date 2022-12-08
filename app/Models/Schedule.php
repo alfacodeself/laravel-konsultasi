@@ -22,9 +22,9 @@ class Schedule extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function transaction()
+    public function transactions()
     {
-        return $this->morphOne(Transaction::class, 'transactionable');
+        return $this->morphMany(Transaction::class, 'transactionable');
     }
     public function chats()
     {

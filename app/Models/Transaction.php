@@ -11,12 +11,16 @@ class Transaction extends Model
     protected $table = 'transactions';
     protected $guarded = [];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
     public function transactionable()
     {
         return $this->morphTo();
+    }
+    public function schedules()
+    {
+        return $this->belongsTo(Schedule::class, 'transactionable_id')->whereTransactionableType(Schedule::class);
+    }
+    public function psycholog_users()
+    {
+        return $this->belongsTo(PsychologUser::class, 'transactionable_id')->whereTransactionableType(PsychologUser::class);
     }
 }

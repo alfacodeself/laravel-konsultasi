@@ -1,4 +1,4 @@
-<div class="left-side-menu">
+{{-- <div class="left-side-menu">
 
     <div class="h-100" data-simplebar>
 
@@ -62,7 +62,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{ route('admin.transaksi.index') }}">
                             <i class="mdi mdi-file-document-multiple-outline"></i>
                             <span> Transaksi </span>
                         </a>
@@ -115,4 +115,93 @@
         </div>
         <div class="clearfix"></div>
     </div>
-</div>
+</div> --}}
+
+{{-- ================================================== --}}
+<div class="topnav">
+    <div class="container-fluid">
+        <nav class="navbar navbar-light navbar-expand-lg topnav-menu">
+
+            <div class="collapse navbar-collapse" id="topnav-menu-content">
+                <ul class="navbar-nav">
+                    @if (auth()->guard('admin')->check())
+                        <li class="nav-item dropdown">
+                            <a class="nav-link arrow-none" href="{{ route('admin.dashboard') }}" id="topnav-dashboard"
+                                role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-view-dashboard me-1"></i> Beranda
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link arrow-none" href="{{ route('admin.psycholog.index') }}" id="topnav-test"
+                                role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-book-edit-outline me-1"></i> Tes Psikolog
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link arrow-none" href="{{ route('admin.pricing.index') }}"
+                                id="topnav-pricing" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-cash-multiple me-1"></i> Paket Konseling
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link arrow-none" href="{{ route('admin.konsultasi.index') }}"
+                                id="topnav-schedule" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-calendar-blank-outline me-1"></i> Jadwal Konseling
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link arrow-none" href="{{ route('admin.pasien.index') }}" id="topnav-patient"
+                                role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-account-box-multiple-outline me-1"></i> Pasien
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link arrow-none" href="{{ route('admin.transaksi.index') }}"
+                                id="topnav-transaction" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-file-document-multiple-outline me-1"></i> Transaksi
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link arrow-none" href="{{ route('admin.pengaturan.profil.index') }}"
+                                id="topnav-transaction" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-account-edit-outline me-1"></i> Profil
+                            </a>
+                        </li>
+                    @elseif (auth()->guard('user')->check())
+                        <li class="nav-item dropdown">
+                            <a class="nav-link arrow-none" href="{{ route('user.dashboard') }}"
+                                id="topnav-dashboard" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-view-dashboard me-1"></i> Beranda
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link arrow-none" href="{{ route('user.konseling.index') }}"
+                                id="topnav-chat" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-forum-outline me-1"></i> Konseling
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link arrow-none" href="{{ route('user.psycholog.index') }}"
+                                id="topnav-result" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-book-edit-outline me-1"></i> Hasil Tes Psikologi
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link arrow-none" href="{{ route('user.transaksi.index') }}"
+                                id="topnav-transaction" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-file-document-multiple-outline me-1"></i> Transaksi
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link arrow-none" href="{{ route('user.pengaturan.profil.index') }}"
+                                id="topnav-transaction" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-account-edit-outline me-1"></i> Profil
+                            </a>
+                        </li>
+                    @endif
+
+                </ul> <!-- end navbar-->
+            </div> <!-- end .collapsed-->
+        </nav>
+    </div> <!-- end container-fluid -->
+</div> <!-- end topnav-->
