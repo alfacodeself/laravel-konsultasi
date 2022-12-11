@@ -72,7 +72,7 @@
                                         <input class="form-control" type="password" required="" name="password_confirmation" id="password_confirmation" placeholder="Confirm your password">
                                     </div>
                                     <div class="my-3 d-grid text-center">
-                                        <button class="btn btn-primary" type="submit"> Log In </button>
+                                        <button class="btn btn-primary" type="submit"> Register </button>
                                     </div>
                                 </form>
 

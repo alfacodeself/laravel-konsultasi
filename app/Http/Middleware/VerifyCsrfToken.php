@@ -12,6 +12,6 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        'http://aea5-182-1-113-187.ap.ngrok.io/charge'
+        'http://08fe-114-125-70-75.ap.ngrok.io/charge'
     ];
 }
